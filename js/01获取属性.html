@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            var btn1 = document.getElementById('btn1');
+            var btn2 = document.getElementById('btn2');
+            var btn3 = document.getElementById('btn3');
+            var btn4 = document.getElementById('btn4');
+            var p1 = document.getElementById('p1');
+            var num = 15;
+            btn2.onclick = function(){
+                if(num < 22){
+                    
+                num++;
+                p1.style.fontSize = num + 'px';
+                }
+                
+            };
+            btn1.onclick = function(){
+                num--;
+                p1.style.fontSize = num + 'px';
+            };
+            btn3.onclick = function(){
+                p1.style.color = 'yellow';
+            };
+            btn4.onclick = function(){
+                p1.style.color ='red' ;
+            };
+        }
+    </script>
+</head>
+
+<body>
+    <input type="button" value="-" id="btn1">
+    <input type="button" value="+" id="btn2">
+    <input type="button" value="黄" id="btn3">
+    <input type="button" value="红" id="btn4">
+    <p id="p1">
+        查看此网页的中文翻译，请点击 翻译此页
+        Websites for you and your projects, hosted directly from your GitHub repository. Just edit, push, and your
+        changes are live.
+        https://www.github.io/ - 百度快照
+    </p>
+</body>
+
+</html>
