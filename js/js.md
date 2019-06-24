@@ -1,5 +1,8 @@
 ## 获取属性
+
+```
 var btn1 = document.getElementById('btn1');
+```
 
 ## 数据类型
 JS中的数据类型：数字（NaN）、字符串、布尔、函数、对象(obj、[]、{}、null)、未定义
