@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        // var s = 65; //秒;
+        // alert(Math.floor(s/60)+'分' + s%60 + '秒' );
+
+
+
+
+        //第一种写法(高亮)
+        // window.onload = function(){
+
+        //     var li = document.getElementsByTagName('li');
+        //     var arr = ['red','yellow','blue'];
+        //     for(var i = 0;i<li.length;i++){
+        //         li[i].index = i;
+        //         li[i].style.background = arr[i%arr.length];
+        //         li[i].onmouseover = function(){
+        //             this.style.background = 'gray';
+        //         };
+        //         li[i].onmouseout = function(){
+        //             this.style.background =arr[this.index % arr.length] ;
+        //         }
+        //     } 
+        // }
+
+    //第二种写法(高亮)
+    
+    // window.onload = function(){
+    //     var li = document.getElementsByTagName('li');
+    //     var arr = ['red','yellow','blue'];
+    //     var str = '';
+    //     for(var i = 0;i<li.length;i++){
+    //         li[i].index = i;
+    //         li[i].style.background = arr[i%arr.length];
+    //         li[i].onmouseover = function(){
+    //             str = this.style.background;
+    //             this.style.background = 'gray';
+    //         };
+    //         li[i].onmouseout = function(){
+    //             this.style.background =str ;
+    //         }
+    //     }
+    // }
+
+
+
+    //&& 与,|| 或  .!否
+    alert(12 < 90 && 28<80); //true
+    var a = 12<90 && 20;
+    alert(a);  //20
+
+    alert(120<90 || 20<80); //true
+    var b = 120>90 ||20 ;
+    alert(b); // true
+
+
+    var c = !true;
+    alert(c) //false
+    </script>
+    <style> 
+        li{
+            height: 24px;
+            margin-bottom: 3px;
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <ul id="ul1">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>
