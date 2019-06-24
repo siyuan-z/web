@@ -1,0 +1,74 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            width: 200px;
+            height: 200px;
+            background: red;
+            overflow: hidden;
+            margin: 20px;
+            position: absolute;
+        }
+
+        #div2 {
+            width: 100px;
+            height: 100px;
+            background: yellow;
+            margin: 30px;
+            position: absolute;
+            left: 25px;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+    <script>
+        $(function () {
+
+            //div2.offsetLeft
+            //alert( $('#div2').offset().left );  //获取到屏幕的左距离
+            alert($('#div2').position().left); //到有定位的父级的left值,把当前元素转化成类似定位的形式
+
+
+            //parent() : 获取父级
+            //offsetParent() : 获取有定位的父级
+            //$('#div2').parent().css('background','blue');
+            $('#div2').offsetParent().css('background', 'blue');
+
+            //alert( $('input').val() );获取value值
+            //$('input').val(456);改变value值
+
+            //alert( $('li').size() );  //4 像length
+            $('li').each(function (i, elem) { //一参：下标 二参 : 每个元素
+                $(elem).html(i);
+
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="div1">
+        <div id="div2"></div>
+    </div>
+
+    <input type="text" value="123">
+
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+
+</html>

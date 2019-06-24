@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+        /* 七 
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+
+        #div2 {
+            width: 100px;
+            height: 100px;
+            background: red;
+            margin-top: 10px;
+        } */
+    </style>
+    <script src="jquery-1.10.1.min.js"></script>
+    <script>
+        $(function () {
+            // 一
+            // //parents() : 获取当前元素的所有祖先节点，参数就是筛选功能
+            // //closest() : 获取最近的指定的祖先节点(包括当前元素自身),必须要写筛选的参数,只能找到一个元素
+
+            // //$('#div2').parents('.box').css('background','red');
+            // $('#div2').closest('.box').css('background', 'red');
+
+            // 二
+            //siblings() : 找所有的兄弟节点，参数也是筛选功能
+            //nextAll() : 下面所有的兄弟节点，参数也是筛选功能
+            //prevAll() : 上面所有的兄弟节点
+            //Until() : 截止
+
+            // $('span').nextUntil('h2').css('background', 'red');
+
+
+            // 三
+            //$('div').appendTo( $('span') );
+            //$('span').get(0).appendChild( $('div').get(0) );
+            //clone() : 可以接收一个参数 ，作用可以复制之前的操作行为
+
+            // $('div').click(function () {
+            //     alert(123);
+            // });
+
+            // $('div').clone(true).appendTo($('span'));
+
+
+            // 四
+            //wrap() : 包装
+            //wrapAll() : 整体包装
+            //wrapInner() : 内部包装
+            //unwrap() : 删除包装 ( 删除父级 : 不包括body )
+
+            //$('span').wrapInner('<div>');
+            // $('span').unwrap();
+
+
+            // 五
+            /*var elem = $('div');
+            	var elem2 = elem.add('span');
+            	elem.css('color','red');
+            	elem2.css('background','yellow');*/
+
+            // $('li').slice(1, 4).css('background', 'red');
+
+
+
+            // 六
+            // //console.log($('form').serialize());  //string : a=1&b=2&c=3
+            // console.log($('form').serializeArray());
+
+            // 七
+            //animate() : 
+            //第一个参数 : {} 运动的值和属性
+            //第二个参数 : 时间(运动快慢的)  默认 : 400
+            //第三个参数 : 运动形式 只有两种运动形式 ( 默认 : swing(慢快慢) linear(匀速) )
+            //第四个参数 :  回调函数
+
+            // $('#div1').click(function () {
+            //     $(this).animate({
+            //         width: 300,
+            //         height: 300
+            //     }, 4000, 'linear', function () {
+            //         alert(123);
+            //     });
+            //     $('#div2').animate({
+            //         width: 300,
+            //         height: 300
+            //     }, 4000, 'swing');
+
+            // });
+
+            // $('#div2').click(function () {
+                //$('#div1').stop();   //默认 : 只会阻止当前运动
+                //$('#div1').stop(true); //阻止后续的运动
+                //$('#div1').stop(true,true); //可以立即停止到指定的目标点
+                // $('#div1').finish(); //立即停止到所有指定的目标点
+
+            // });
+
+
+
+        });
+    </script>
+</head>
+
+<body class="box">
+    <!-- 一
+    <div id="div1">aaa
+        <div id="div2" class="box">bbb</div>
+    </div> -->
+
+
+    <!-- 二
+    <div>div</div>
+    <span>span</span>
+    <p>p</p>
+    <h1>h1</h1>
+    <h2>h2</h2>
+    <em>em</em> -->
+
+
+    <!-- 三
+    <div>div</div>
+    <span>span</span> -->
+
+
+    <!-- 四
+    <span>span</span>
+    <div>
+        <span>span</span>
+    </div>
+    <span>span</span> -->
+
+
+    <!-- 五
+    <div>div</div>
+    <span>span</span>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul> -->
+
+    <!-- 六
+    <form>
+        <input type="text" name="a" value="1">
+        <input type="text" name="b" value="2">
+        <input type="text" name="c" value="3">
+    </form> -->
+
+    <!-- 七
+    <div id="div1"></div>
+    <div id="div2"></div> -->
+</body>
+
+</html>

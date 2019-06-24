@@ -1,0 +1,53 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+    <script>
+        $(function () {
+
+            //alert($('div').attr('title'));
+
+            // $('div').attr('title','456');
+            // $('div').attr('class','box');
+
+
+            // $('div').filter('.box').css('background','red'); //filter:过滤
+            // $('div').not('.box').css('background','red'); //not:反义词
+            // $('div').has('span').css('background','red');  //has:包含
+
+
+            $('#div1').hover(function () {
+
+                //$(this).css('background','blue');
+                //$('#div2').hide(3000);隐藏
+                //$('#div2').fadeOut(1000);  //默认400 淡出
+                //$('#div2').slideUp(); 滑入
+                $('#div2').fadeTo(1000, 0.5);
+            }, function () {
+                //$(this).css('background','red');
+                //$('#div2').show(3000);显示
+                //$('#div2').fadeIn(1000);淡出
+                //$('#div2').slideDown(); 滑出
+                $('#div2').fadeTo(1000, 1);
+            });//hover：鼠标移入移出
+        });
+    </script>
+</head>
+
+<body>
+    <!-- <div title="123">div</div>
+ -->
+
+    <!-- <div class="box">div1 <span>span</span> </div>
+ <div>div2</div> -->
+
+
+    <div id="div1"></div>
+    <div id="div2"></div>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+    <script>
+        $(function () {
+
+            // $('div').addClass('box2 box4');//添加
+            // $('div').removeClass('box1');//移除
+
+            // alert($('div').width()); //width
+            // alert($('div').innerWidth()); //width + padding
+            // alert($('div').outerWidth()); //width + padding + border
+            // alert($('div').outerWidth(true)); //width + padding + border + margin
+
+            $('span').insertBefore($('div'));
+            $('div').prependTo($('span')); //把##放在##前
+            $('div').insertAfter($('span'));
+            $('div').appendTo($('span')); //把##放在##后
+
+            //区别 ：后续操作变了 其他也一样
+            //$('span').insertBefore( $('div') ).css('background','red');
+            $('div').before($('span')).css('background', 'red');
+
+            $("div").on({
+                'click':function(){
+                    alert(123);
+                },
+                'mouseover':function(){
+                    alert(456);
+                }
+            }); //添加事件
+            $('div').on('click mouseover',function(){
+                alert(132);
+                $('div').off()
+            });//取消事件
+
+
+            $(document).click(function(){
+               alert( $(window).scrollTop());//滚动距离
+            })
+        });
+    </script>
+</head>
+
+<body style="height:200px;">
+    <!-- <div class="box1 box2">div</div> -->
+
+    <div>div</div>
+    <span>span</span>
+
+</body>
+
+</html>

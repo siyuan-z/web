@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+</head>
+
+<body>
+    <div id="div" class="div">div</div>
+    <span class="box">span</span>
+
+    <ul>
+        <li></li>
+        <li title="hello"></li>
+        <li class="box"></li>
+        <li class="box"></li>
+        <li title="hello"></li>
+    </ul>
+    <script>
+        document.getElementById('div1');
+        document.getElementsByTagName('div');
+        getByClass(document, 'box');
+
+        $('#div1').css('background', 'red');
+        $('div').css('background', 'red');
+        $('.box').css('background', 'red');
+        $('.box').css('background', 'red');
+
+        $('li:eq(2)').css('background','red');
+        $('li:odd').css('background','red');  
+        $('li').filter('.box').css('background','red');
+        $('li').filter('[title=hello]').css('background', 'red');
+    </script>
+</body>
+
+</html>

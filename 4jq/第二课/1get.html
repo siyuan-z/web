@@ -1,0 +1,74 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: red;
+            display: none;
+        }
+    </style>
+    <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+    <script>
+        
+        window.onload = function(){};//等页面加载完
+        $(document).ready(function(){});//和$(function(){})一样
+        $(function () {  //等DOM加载完就可以执行了 , 性能要好
+
+
+        //get() : 就是把JQ转成原生JS
+            //document.getElementById('div1').innerHTML
+            //alert( $('#div1').get(0).innerHTML );
+            /*for(var i=0;i<$('li').get().length;i++){
+            	$('li').get(i).style.background = 'red';
+            }*/
+            // for (var i = 0; i < $('li').length; i++) {
+            //     $('li').get(i).style.background = 'red';
+            //     //$('li')[i].style.background = 'red';
+            // }
+
+
+
+            //alert( $('#div1').get(0).offsetWidth );
+            alert($('#div1').outerWidth());
+
+
+
+            //alert( $('div').html() );
+            //alert( $('div').text() );  //会获取所有的内容(特例)
+            $('div').text('<h3>h3</h3>');
+
+
+
+            //detach() : 跟remove方法一样，只不过会保留删除这个元素的操作行为
+            $('div').click(function () {
+                alert(123);
+            });
+            var oDiv = $('div').detach();
+            $('body').append(oDiv);
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="div1">div</div>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+
+    <div>div1<span>span</span></div>
+    <div>div2</div>
+    <div>div3</div>
+</body>
+
+</html>

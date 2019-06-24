@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+<script>
+    //方法函数化
+
+    // window.onload = function(){};
+    // $(function(){});
+    // function $(){};
+
+    // innerHTML = 123;
+    // html(123)
+    // function html(){}
+
+    // onclick = function (){};
+    // click(function(){})
+    // function click(){}
+
+
+    window.onload = function(){
+        var div1 = document.getElementById('div1');
+        div1.onclick = function(){
+            alert(this.innerHTML);
+        }
+    };
+
+    $(function(){
+        // var div1 = $('#div1');
+        // div1.click(function(){
+        //     alert($(this).html()); //jq写法
+        //     alert(this.innerHTML); //js写法
+        //     alert($(this).innerHTML); alert(this.html()); //错误的
+        // })
+
+
+
+        //链式操作
+        $('#div1').html('hello').css('background','res').click(
+            function(){
+                alert(123);
+            }
+        )
+    })
+
+</script>
+</head>
+<body>
+    <div id="div1">div</div>
+</body>
+</html>

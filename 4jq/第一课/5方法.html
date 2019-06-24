@@ -1,0 +1,36 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+    <script>
+        $(function () {
+
+            $('div').next().css('background', 'red'); //next:下一个 prev：上一个
+            $('div').find('h2').css('background','yellow');//find:找到所有
+            $('div').find('h2').eq(1).css('background','yellow');//eq:相当于下标
+            alert($('#h').index()); //索引就是当前元素在所有兄弟节点中的位置
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <div>div</div>
+    <span>span</span>
+    <p>p</p>
+
+    <div>
+        <h3>哒哒</h3>
+        <h3>哒哒</h3>
+        <h2 id="h">哒哒</h2>
+        <h2>哒哒</h2>
+        <h2>哒哒</h2>
+    </div>
+</body>
+
+</html>

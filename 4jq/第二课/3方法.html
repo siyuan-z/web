@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <script src="jquery-1.10.1.min.js"></script>
+    <script>
+        $(function () {
+            // 一
+            // /*$('li').on('click',function(){
+            // 	this.style.background = 'red';
+            // });*/
+
+            // $('ul').delegate('li', 'click', function () {
+            //     this.style.background = 'red';
+            //     $('ul').undelegate();
+            // });
+
+            // 二
+            /*$('#div1').on('click',function(){
+		alert(123);
+	});
+	$('#div1').trigger('click');  //主动触发*/
+
+            // $('#div1').on('show', function () {
+            //     alert(123);
+            // });
+            // $('#div1').on('show', function () {
+            //     alert(456);
+            // });
+            // $('#div1').trigger('show');
+
+
+            // 三
+            //$().css()  $().html()  $().val()  : 只能给JQ对象用
+            //$.xxx()  $.yyy()  $.zzz()  : 不仅可以给JQ用，也可以给原生JS用 : 叫做工具方法
+
+
+
+            //var a = null;
+            //$.type() : 也是判断类型
+            //alert( typeof a );
+            //alert( $.type(a) );
+
+            // var str = '   hello  ';
+            // alert('(' + $.trim(str) + ')');
+
+            // 四
+            //inArray() : 类似于 indexOf
+
+            //var arr = ['a','b','c','d'];
+            //alert(  $.inArray('b',arr)  );
+            //proxy()  : 改变this指向的
+
+            // function show(n1, n2) {
+            //     alert(n1);
+            //     alert(n2);
+            //     alert(this);
+            // }
+            //show();
+            //$.proxy(show , document,3)(4);
+            // $(document).click($.proxy(show, window, 3, 4));
+
+
+            // 五
+            //noConflict() : 防止冲突的
+            /*var miaov = $.noConflict();
+                var $ = 10;
+                 miaov(function(){
+	            miaov('body').css('background','red');
+            );*/
+
+            // 六
+            // 解析语法
+            //var str = '{"name":"hello"}';
+            //alert($.parseJSON( str ).name);
+
+
+
+            // 七
+            //将类数组转为数组
+            // var aDiv = document.getElementsByTagName('div'); //类数组
+            // $.makeArray(aDiv).push();
+
+        });
+    </script>
+</head>
+
+<body>
+    <!-- 一
+    <ul>
+        <li>11111</li>
+        <li>1111</li>
+        <li>1111</li>
+        <li>111</li>
+        <li>1111</li>
+    </ul> -->
+
+
+    <!-- 二
+    <div id="div1">aaaa</div> -->
+
+
+    <!-- 七
+    <div></div>
+    <div></div>
+    <div></div> -->
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+        }
+    </style>
+    <script src="jquery-1.10.1.min.js"></script>
+    <script>
+        //$.extend : 扩展工具方法下的插件形式  $.xxx() $.yyy()
+        //$.fn.extend  :  扩展到JQ对象下的插件形式  $().xxx()  $().yyy()
+
+        $.extend({
+            leftTrim: function (str) {
+                return str.replace(/^\s+/, '');
+
+            },
+            rightTrim: function () {},
+            aaa: function () {
+                alert(1);
+            },
+
+            bbb: function () {}
+        });
+
+        $.fn.extend({
+            drge: function () {
+                var disX = 0;
+                var disY = 0;
+                var This = this;
+                this.onmousedown(function () {
+                    disX = ev.pageX - $(this).offset().left;
+                    disY = ev.pageY - $(this).offset().top;
+
+                    $(document).mousemove(function (ev) {
+                        This.css('left', ev.pageX - disX);
+                        This.css('top', ev.pageY - disY);
+                    });
+
+                    $(document).mouseup(function () {
+                        $(this).off()
+                    });
+
+                    return false;
+
+                })
+            },
+            aaa: function () {
+                alert(2);
+            }
+        })
+    </script>
+
+    <script>
+        $(function () {
+
+            $('#div1').drag();
+
+        });
+
+
+        $.aaa(); // 1
+        $().aaa(); //2
+    </script>
+</head>
+
+<body>
+    <div id="div1"></div>
+</body>
+
+</html>
