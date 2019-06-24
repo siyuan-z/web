@@ -66,5 +66,5 @@ JQ只是辅助工具，要正确面对
 * fadeOut() 淡出
 * fadeTo() 被选元素的不透明度逐渐地改变为指定的值
 * slideDown()   滑出
-* slideUp()  滑入   
+* slideUp()  滑入     
 
