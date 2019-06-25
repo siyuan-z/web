@@ -1,50 +1,45 @@
-
 <!DOCTYPE HTML>
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>无标题文档</title>
-<style>
-#div1{ width:100px; height:100px; background:red; position:absolute;}
-</style>
-<script src="jquery-1.11.1.js"></script>
-<script>
-
-$(function(){
-	
-	
-	$('ul').delegate('li','click',function(ev){
-		$(this).css('background','red');
-		
-	});
-	
-	$('#input1').click(function(){
-		var $li = $('<li>'+ $('#input2').val() +'</li>');
-		$('ul').append( $li );
-	});
-	
-	
-	$('#input2').keydown(function(ev){
-		if(ev.which == 13){
-			
-			$('#input1').trigger('click');
-			
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>无标题文档</title>
+	<style>
+		#div1 {
+			width: 100px;
+			height: 100px;
+			background: red;
+			position: absolute;
 		}
-	});
-	
-});
-
-</script>
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script>
+		$(function () {
+			$('ul').delegate('li', 'click', function (ev) {
+				$(this).css('background', 'red');
+			});
+			$("#input1").click(function () {
+				var $li = $('<li>' + $('#input2').val() + '</li>');
+				$('ul').append($li);
+			});
+			$("#input2").keydown(function (ev) {
+				if (ev.width == 13) {
+					$('#input1').trigger('click')
+				}
+			});
+		});
+	</script>
 </head>
 
 <body>
-<input id="input1" type="button" value="添加">
-<input id="input2" type="text">
-<ul>
-	<li>11111</li>
-    <li>11111</li>
-    <li>11111</li>
-    <li>11111</li>
-</ul>
+	<input id="input1" type="button" value="添加">
+	<input id="input2" type="text">
+	<ul>
+		<li>11111</li>
+		<li>11111</li>
+		<li>11111</li>
+		<li>11111</li>
+	</ul>
 </body>
+
 </html>
