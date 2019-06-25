@@ -1,0 +1,51 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+span{ margin:10px; cursor:pointer;}
+ul{ width:200px; height:200px; border:1px #000 solid; display:none;}
+.show{ display:block;}
+</style>
+<script src="jquery-1.11.1.js"></script>
+</head>
+
+<body>
+<input type="button" value="点击">
+<ul>
+	<li>111</li>
+    <li>111</li>
+    <li>111</li>
+    <li>111</li>
+</ul>
+<script>
+
+/*$('input').click(function(){
+	
+	$('ul').toggleClass('show');
+	
+});*/
+
+//第二种做法
+
+var bBtn = true;
+
+$('input').click(function(){
+	
+	if(bBtn){
+		$('ul').show();
+	}
+	else{
+		$('ul').hide();
+	}
+	
+	bBtn = !bBtn;
+	
+});
+
+
+</script>
+</body>
+</html>
