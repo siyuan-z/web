@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementById('btn');
+            btn.onclick = function(){
+                //打开浏览器 
+                /*
+                    1.创建一个ajax对象（XMLHttpRequest）
+                    ie6以下 new ActiveXobject('Microsoft.XMLHTTP')
+                */
+                var xhr = null;
+                //兼容处理一
+                // if(window.XMLHttpRequest){
+                //     xhr = new XMLHttpRequest()
+                // }else{
+                //     xhr = new ActiveXobject('Microsoft.XMLHTTP')
+                // };
+                    
+                //兼容处理二
+                    try{
+                        xhr = new XMLHttpRequest()
+                    }catch(e){
+                        xhr = new ActiveXobject('Microsoft.XMLHTTP')
+                    }
+
+                    //手动抛错
+                    // try{
+                        //代码尝试执行这个块中的内容，如果有错误，则会执行catch{},并且传入错误信息参数
+                       // 1 alert(a)
+                       //2 throw new Error('错了)
+                    // }catch(e){
+                       //1 alert(2)
+                       //2 alert(e)
+                    // }
+                    // alert('到这里了') 1 弹出 2 到这里了 , 2 弹出 错了 到这里了
+
+
+
+                //在地址栏输入地址
+                /*
+                        open方式
+                        参数
+                            1.打开方式
+                            2.地址
+                            3，是否异步
+                                    异步：非阻塞 前面代码不会影响后面代码的运行
+                                    同步：阻塞  前面代码会影响后面代码的运行
+
+                */
+                xhr.open('get','1.txt',true);
+                //提交  发送请求
+                xhr.send();
+                //等待服务器范湖内容
+                /*
+                    readyState:ajax工作状态
+                    responseText:ajax请求返回的内容就被存放到这个属性下面
+                    on readystate change :当readyState改变是触发
+                    sattus:服务器撞他，http状态码
+                */
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == 4){
+                        if(xhr.status == 200){
+                            alert(xhr.responseText);
+                        }else{
+                            alert('出错了,Err' + xhr.status);
+                        }
+                        
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="按钮" id="btn">
+</body>
+</html>

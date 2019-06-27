@@ -163,7 +163,7 @@
                 
                 createListGW: function () { //创建敌人队列
                     var This = this;
-                    var num = 10;
+                    var num = 5;
                     var timer = setInterval(function () {
                         if (num == 0) {
                             clearInterval(timer);
@@ -201,7 +201,7 @@
                                 iNow++;
                             }
                         }
-                    }, 30);
+                    }, 20);
                 },
                 routes: function () { //收集路线
                     var This = this;
@@ -274,7 +274,7 @@
                     });
                     setTimeout(function () {
                         This.listens();
-                    }, 100);
+                    }, 1000);
                 },
                 listenGW: function (pt) { //监听每一个敌人
                     var $aGw = this.$parent.find('.' + this.gwStyle);
