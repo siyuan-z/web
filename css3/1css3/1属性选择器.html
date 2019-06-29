@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+        p {
+            height: 30px;
+            border: 1px solid #000;
+        }
+
+        /* 只使用属性名
+        p[miaov] {
+            background: red;
+        } */
+
+        /* 指定属性名，并指定了该属性的属性值 
+        p[miaov=leo] {
+            background: red;
+        } */
+
+
+        /* 指定属性名，并且具有属性值，此属性值是一个词列表并且以空格隔开，
+        其中词列表中包含了一个value词，而且等号前面的“〜”不能不写
+        p[miaov~=old] {
+            background: red;
+        } */
+
+        /* 指定了属性名，并且有属性值，属性值是以value开头的
+        p[miaov^=g] {
+            background: pink;
+        } */
+
+        /* 指定了属性名，并且有属性值，而且属性值是以value结束的
+        p[miaov$=M] {
+            background: #CC0;
+        } */
+
+        /* 指定了属性名，并且有属性值，而且属值中包含了value
+        p[miaov*=d] {
+            background: #C3C;
+        } */
+
+        /* 指定了属性名，并且属性值是value或者以“value-”开头的值
+        p[miaov|=b] {
+            background: #C3C;
+        } */
+    </style>
+</head>
+
+<body>
+    <p miaov="leo">leo</p>
+    <p miaov="dp">杜鹏</p>
+    <p miaov="zM">子鼠</p>
+    <p miaov="xm">小美</p>
+</body>
+
+</html>

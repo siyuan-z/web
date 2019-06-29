@@ -11,4 +11,4 @@ if ($t == 'num') {
 	$data = json_encode($arr2);
 }
 
-echo $callback.'('.$data.');';
+echo $callback.'('.$data.');'; 
