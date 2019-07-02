@@ -64,51 +64,51 @@ var
 	},
 
 	// Used for matching numbers
-	core_pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,
+	core_pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,//匹配数字
 
 	// Used for splitting on whitespace
-	core_rnotwhite = /\S+/g,
+	core_rnotwhite = /\S+/g,//匹配空格
 
 	// A simple way to check for HTML strings
 	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
 	// Strict HTML recognition (#11290: must start with <)
-	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
+	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,//匹配标签
 
 	// Match a standalone tag
-	rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
+	rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,//匹配一个标签
 
 	// Matches dashed string for camelizing
-	rmsPrefix = /^-ms-/,
-	rdashAlpha = /-([\da-z])/gi,
+	rmsPrefix = /^-ms-/,//匹配前缀
+	rdashAlpha = /-([\da-z])/gi,//匹配大小写
 
 	// Used by jQuery.camelCase as callback to replace()
-	fcamelCase = function( all, letter ) {
+	fcamelCase = function( all, letter ) {//转驼峰的函数
 		return letter.toUpperCase();
 	},
 
 	// The ready event handler and self cleanup method
-	completed = function() {
+	completed = function() {//dom加载成功时回调
 		document.removeEventListener( "DOMContentLoaded", completed, false );
 		window.removeEventListener( "load", completed, false );
 		jQuery.ready();
 	};
 
-jQuery.fn = jQuery.prototype = {
+jQuery.fn = jQuery.prototype = {//覆盖
 	// The current version of jQuery being used
 	jquery: core_version,
 
-	constructor: jQuery,
-	init: function( selector, context, rootjQuery ) {
+	constructor: jQuery,//修正
+	init: function( selector, context, rootjQuery ) {//初始化和参数管理
 		var match, elem;
 
 		// HANDLE: $(""), $(null), $(undefined), $(false)
-		if ( !selector ) {
+		if ( !selector ) {//错了直接返回
 			return this;
 		}
 
 		// Handle HTML strings
-		if ( typeof selector === "string" ) {
-			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+		if ( typeof selector === "string" ) {//处理字符串
+			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {//找标签
 				// Assume that strings that start and end with <> are HTML and skip the regex check
 				match = [ null, selector, null ];
 
@@ -173,40 +173,41 @@ jQuery.fn = jQuery.prototype = {
 				return this.constructor( context ).find( selector );
 			}
 
-		// HANDLE: $(DOMElement)
+		// HANDLE: $(DOMElement) 判断是否是节点
 		} else if ( selector.nodeType ) {
-			this.context = this[0] = selector;
-			this.length = 1;
-			return this;
+			this.context = this[0] = selector;//赋值
+			this.length = 1;//手动改变 长度
+			return this;  //存在this中
 
 		// HANDLE: $(function)
 		// Shortcut for document ready
-		} else if ( jQuery.isFunction( selector ) ) {
-			return rootjQuery.ready( selector );
+		} else if ( jQuery.isFunction( selector ) ) {//判断是否为函数
+			return rootjQuery.ready( selector );//调用函数
 		}
 
-		if ( selector.selector !== undefined ) {
+		if ( selector.selector !== undefined ) {//看传的参属性是否为undefined
 			this.selector = selector.selector;
 			this.context = selector.context;
+			//相当于$($('#div1')) ->$('#div1')
 		}
 
-		return jQuery.makeArray( selector, this );
+		return jQuery.makeArray( selector, this );//传一个参数是转化成数组，传俩个参数是转化成自己想要的形式
 	},
 
 	// Start with an empty selector
-	selector: "",
+	selector: "",//存选择到的字符串
 
 	// The default length of a jQuery object is 0
-	length: 0,
+	length: 0,//json的长度
 
-	toArray: function() {
-		return core_slice.call( this );
+	toArray: function() {//转数组
+		return core_slice.call( this );//截取某范围内数组
 	},
 
 	// Get the Nth element in the matched element set OR
 	// Get the whole matched element set as a clean array
-	get: function( num ) {
-		return num == null ?
+	get: function( num ) {//转原生集合（数组形式）
+		return num == null ?//转集合
 
 			// Return a 'clean' array
 			this.toArray() :
@@ -217,13 +218,13 @@ jQuery.fn = jQuery.prototype = {
 
 	// Take an array of elements and push it onto the stack
 	// (returning the new matched element set)
-	pushStack: function( elems ) {
+	pushStack: function( elems ) {//jq对象的入栈
 
 		// Build a new jQuery matched element set
 		var ret = jQuery.merge( this.constructor(), elems );
 
 		// Add the old object onto the stack (as a reference)
-		ret.prevObject = this;
+		ret.prevObject = this;//挂载
 		ret.context = this.context;
 
 		// Return the newly-formed element set
@@ -233,42 +234,42 @@ jQuery.fn = jQuery.prototype = {
 	// Execute a callback for every element in the matched set.
 	// (You can seed the arguments with an array of args, but this is
 	// only used internally.)
-	each: function( callback, args ) {
+	each: function( callback, args ) {//实例方法
 		return jQuery.each( this, callback, args );
 	},
 
-	ready: function( fn ) {
+	ready: function( fn ) {//dom加载接口
 		// Add the callback
 		jQuery.ready.promise().done( fn );
 
 		return this;
 	},
 
-	slice: function() {
+	slice: function() {//截取
 		return this.pushStack( core_slice.apply( this, arguments ) );
 	},
 
-	first: function() {
-		return this.eq( 0 );
+	first: function() {//第一个
+		return this.eq( 0 );//具体的一个
 	},
 
-	last: function() {
+	last: function() {//最后一个
 		return this.eq( -1 );
 	},
 
-	eq: function( i ) {
+	eq: function( i ) {//具体的一个
 		var len = this.length,
 			j = +i + ( i < 0 ? len : 0 );
 		return this.pushStack( j >= 0 && j < len ? [ this[j] ] : [] );
 	},
 
-	map: function( callback ) {
+	map: function( callback ) {//对集合进行二次处理
 		return this.pushStack( jQuery.map(this, function( elem, i ) {
 			return callback.call( elem, i, elem );
 		}));
 	},
 
-	end: function() {
+	end: function() {//回溯
 		return this.prevObject || this.constructor(null);
 	},
 
@@ -280,17 +281,17 @@ jQuery.fn = jQuery.prototype = {
 };
 
 // Give the init function the jQuery prototype for later instantiation
-jQuery.fn.init.prototype = jQuery.fn;
-
+jQuery.fn.init.prototype = jQuery.fn;//引用
+//jq中扩展插件    扩展jq实例方法
 jQuery.extend = jQuery.fn.extend = function() {
 	var options, name, src, copy, copyIsArray, clone,
 		target = arguments[0] || {},
 		i = 1,
 		length = arguments.length,
-		deep = false;
+		deep = false;//浅拷贝
 
 	// Handle a deep copy situation
-	if ( typeof target === "boolean" ) {
+	if ( typeof target === "boolean" ) {//判断是为浅拷贝还是深拷贝
 		deep = target;
 		target = arguments[1] || {};
 		// skip the boolean and the target
@@ -298,19 +299,19 @@ jQuery.extend = jQuery.fn.extend = function() {
 	}
 
 	// Handle case when target is a string or something (possible in deep copy)
-	if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
+	if ( typeof target !== "object" && !jQuery.isFunction(target) ) {//看参数是否正确
 		target = {};
 	}
 
 	// extend jQuery itself if only one argument is passed
-	if ( length === i ) {
+	if ( length === i ) {//看是不是插件
 		target = this;
 		--i;
 	}
 
-	for ( ; i < length; i++ ) {
+	for ( ; i < length; i++ ) {//可能有多个对象情况
 		// Only deal with non-null/undefined values
-		if ( (options = arguments[ i ]) != null ) {
+		if ( (options = arguments[ i ]) != null ) {//看后面的对象是否都有值 防止循环引用
 			// Extend the base object
 			for ( name in options ) {
 				src = target[ name ];
@@ -322,7 +323,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 				}
 
 				// Recurse if we're merging plain objects or arrays
-				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
+				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {//深拷贝
 					if ( copyIsArray ) {
 						copyIsArray = false;
 						clone = src && jQuery.isArray(src) ? src : [];
@@ -335,7 +336,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 					target[ name ] = jQuery.extend( deep, clone, copy );
 
 				// Don't bring in undefined values
-				} else if ( copy !== undefined ) {
+				} else if ( copy !== undefined ) {//浅拷贝
 					target[ name ] = copy;
 				}
 			}
@@ -346,11 +347,11 @@ jQuery.extend = jQuery.fn.extend = function() {
 	return target;
 };
 
-jQuery.extend({
+jQuery.extend({//扩展一些工具方法
 	// Unique for each copy of jQuery on the page
-	expando: "jQuery" + ( core_version + Math.random() ).replace( /\D/g, "" ),
+	expando: "jQuery" + ( core_version + Math.random() ).replace( /\D/g, "" ),//生成唯一jq字符串
 
-	noConflict: function( deep ) {
+	noConflict: function( deep ) {//防止冲突
 		if ( window.$ === jQuery ) {
 			window.$ = _$;
 		}
@@ -363,14 +364,14 @@ jQuery.extend({
 	},
 
 	// Is the DOM ready to be used? Set to true once it occurs.
-	isReady: false,
+	isReady: false,//dom是否加载完成
 
 	// A counter to track how many items to wait for before
 	// the ready event fires. See #6781
-	readyWait: 1,
+	readyWait: 1,//等待多少文件的计数器
 
 	// Hold (or release) the ready event
-	holdReady: function( hold ) {
+	holdReady: function( hold ) {//推迟dom触发
 		if ( hold ) {
 			jQuery.readyWait++;
 		} else {
@@ -379,7 +380,7 @@ jQuery.extend({
 	},
 
 	// Handle when the DOM is ready
-	ready: function( wait ) {
+	ready: function( wait ) {//准备dom触发
 
 		// Abort if there are pending holds or we're already ready
 		if ( wait === true ? --jQuery.readyWait : jQuery.isReady ) {
@@ -406,21 +407,21 @@ jQuery.extend({
 	// See test/unit/core.js for details concerning isFunction.
 	// Since version 1.3, DOM methods and functions like alert
 	// aren't supported. They return false on IE (#2968).
-	isFunction: function( obj ) {
+	isFunction: function( obj ) {//是否为函数
 		return jQuery.type(obj) === "function";
 	},
 
-	isArray: Array.isArray,
+	isArray: Array.isArray,//是否为数组
 
-	isWindow: function( obj ) {
+	isWindow: function( obj ) {//是否为window
 		return obj != null && obj === obj.window;
 	},
 
-	isNumeric: function( obj ) {
+	isNumeric: function( obj ) {//是否为数字
 		return !isNaN( parseFloat(obj) ) && isFinite( obj );
 	},
 
-	type: function( obj ) {
+	type: function( obj ) {//判断数据类型
 		if ( obj == null ) {
 			return String( obj );
 		}
@@ -430,7 +431,7 @@ jQuery.extend({
 			typeof obj;
 	},
 
-	isPlainObject: function( obj ) {
+	isPlainObject: function( obj ) {//是否为对象自变量
 		// Not plain objects:
 		// - Any object or value whose internal [[Class]] property is not "[object Object]"
 		// - DOM nodes
@@ -457,7 +458,7 @@ jQuery.extend({
 		return true;
 	},
 
-	isEmptyObject: function( obj ) {
+	isEmptyObject: function( obj ) {//是否为空对象
 		var name;
 		for ( name in obj ) {
 			return false;
@@ -465,14 +466,14 @@ jQuery.extend({
 		return true;
 	},
 
-	error: function( msg ) {
+	error: function( msg ) {//抛出异常
 		throw new Error( msg );
 	},
 
 	// data: string of html
 	// context (optional): If specified, the fragment will be created in this context, defaults to document
 	// keepScripts (optional): If true, will include scripts passed in the html string
-	parseHTML: function( data, context, keepScripts ) {
+	parseHTML: function( data, context, keepScripts ) {//解析节点
 		if ( !data || typeof data !== "string" ) {
 			return null;
 		}
