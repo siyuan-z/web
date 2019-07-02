@@ -101,6 +101,7 @@ onmousemove : 移动元素
 onmouseup 	: 释放元素
 
 ## 拖拽的封装
+```python
 window.onload = function() {
 	
 	var oDiv = document.getElementById('div1');
@@ -144,6 +145,7 @@ window.onload = function() {
 	}
 	
 }
+```
 
 ## 鼠标滚动
 ie/chrome : onmousewheel

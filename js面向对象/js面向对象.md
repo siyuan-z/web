@@ -22,24 +22,21 @@ var obj = new Object(); //创建了一个空的对象
 
 ## 工厂方式
 ```python
-        function createPerson(name) {
-
-            //1.原料
-            var obj = new Object();
-            //2.加工
-            obj.name = name;
-            obj.showName = function () {
-                alert(this.name);
-            };
-            //3.出场
-            return obj;
-
-        }
-
-        var p1 = createPerson('小明');
-        p1.showName();//小明
-        var p2 = createPerson('小强');
-        p2.showName();//小强
+function createPerson(name) {
+    //1.原料
+    var obj = new Object();
+    //2.加工
+    obj.name = name;
+    obj.showName = function () {
+        alert(this.name);
+    };
+    //3.出场
+    return obj;
+}
+var p1 = createPerson('小明');
+p1.showName();//小明
+var p2 = createPerson('小强');
+p2.showName();//小强
 ```
 
 ## 构造函数
