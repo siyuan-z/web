@@ -500,7 +500,7 @@ jQuery.extend({//扩展一些工具方法
 		return jQuery.merge( [], parsed.childNodes );
 	},
 
-	parseJSON: JSON.parse,
+	parseJSON: JSON.parse,//解析json
 
 	// Cross-browser xml parsing
 	parseXML: function( data ) {
@@ -510,27 +510,27 @@ jQuery.extend({//扩展一些工具方法
 		}
 
 		// Support: IE9
-		try {
+		try {//ie9以上环境下
 			tmp = new DOMParser();
 			xml = tmp.parseFromString( data , "text/xml" );
 		} catch ( e ) {
 			xml = undefined;
 		}
 
-		if ( !xml || xml.getElementsByTagName( "parsererror" ).length ) {
+		if ( !xml || xml.getElementsByTagName( "parsererror" ).length ) {//其他浏览器
 			jQuery.error( "Invalid XML: " + data );
 		}
 		return xml;
 	},
 
-	noop: function() {},
+	noop: function() {},//空函数
 
 	// Evaluates a script in a global context
-	globalEval: function( code ) {
+	globalEval: function( code ) {//全局解析js
 		var script,
 				indirect = eval;
 
-		code = jQuery.trim( code );
+		code = jQuery.trim( code );//只在局部作用域有效
 
 		if ( code ) {
 			// If the code includes a valid, prologue position
@@ -550,11 +550,11 @@ jQuery.extend({//扩展一些工具方法
 
 	// Convert dashed to camelCase; used by the css and data modules
 	// Microsoft forgot to hump their vendor prefix (#9572)
-	camelCase: function( string ) {
+	camelCase: function( string ) {//转驼峰(内部)
 		return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
 	},
 
-	nodeName: function( elem, name ) {
+	nodeName: function( elem, name ) {//是否为指定节点名(内部)
 		return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 	},
 
@@ -608,12 +608,12 @@ jQuery.extend({//扩展一些工具方法
 		return obj;
 	},
 
-	trim: function( text ) {
+	trim: function( text ) {//去前后空格
 		return text == null ? "" : core_trim.call( text );
 	},
 
 	// results is for internal usage only
-	makeArray: function( arr, results ) {
+	makeArray: function( arr, results ) {//转数组
 		var ret = results || [];
 
 		if ( arr != null ) {
@@ -630,11 +630,11 @@ jQuery.extend({//扩展一些工具方法
 		return ret;
 	},
 
-	inArray: function( elem, arr, i ) {
+	inArray: function( elem, arr, i ) {//数组版indexof
 		return arr == null ? -1 : core_indexOf.call( arr, elem, i );
 	},
 
-	merge: function( first, second ) {
+	merge: function( first, second ) {//合并数组
 		var l = second.length,
 			i = first.length,
 			j = 0;
@@ -707,11 +707,11 @@ jQuery.extend({//扩展一些工具方法
 	},
 
 	// A global GUID counter for objects
-	guid: 1,
+	guid: 1,//唯一标识（与函数等关联起来）
 
 	// Bind a function to a context, optionally partially applying any
 	// arguments.
-	proxy: function( fn, context ) {
+	proxy: function( fn, context ) {//gaithis指向
 		var tmp, args, proxy;
 
 		if ( typeof context === "string" ) {
@@ -791,25 +791,25 @@ jQuery.extend({//扩展一些工具方法
 				length ? fn( elems[0], key ) : emptyGet;
 	},
 
-	now: Date.now,
+	now: Date.now,//当前时间
 
 	// A method for quickly swapping in/out CSS properties to get correct calculations.
 	// Note: this method belongs to the css module but it's needed here for the support module.
 	// If support gets modularized, this method should be moved back to the css module.
-	swap: function( elem, options, callback, args ) {
+	swap: function( elem, options, callback, args ) {// CSS交换(内部)
 		var ret, name,
 			old = {};
 
 		// Remember the old values, and insert the new ones
-		for ( name in options ) {
+		for ( name in options ) {//获取到样式
 			old[ name ] = elem.style[ name ];
 			elem.style[ name ] = options[ name ];
 		}
 
-		ret = callback.apply( elem, args || [] );
+		ret = callback.apply( elem, args || [] );//改变
 
 		// Revert the old values
-		for ( name in options ) {
+		for ( name in options ) {//还原
 			elem.style[ name ] = old[ name ];
 		}
 
@@ -846,7 +846,7 @@ jQuery.each("Boolean Number String Function Array Date RegExp Object Error".spli
 	class2type[ "[object " + name + "]" ] = name.toLowerCase();
 });
 
-function isArraylike( obj ) {
+function isArraylike( obj ) {//判断数组，类数组和特殊的json
 	var length = obj.length,
 		type = jQuery.type( obj );
 
@@ -864,7 +864,7 @@ function isArraylike( obj ) {
 }
 
 // All jQuery objects should point back to these
-rootjQuery = jQuery(document);
+rootjQuery = jQuery(document);//获取根目录
 /*!
  * Sizzle CSS Selector Engine v1.9.4-pre
  * http://sizzlejs.com/
@@ -2878,7 +2878,7 @@ function createOptions( options ) {
  *	stopOnFalse:	interrupt callings when a callback returns false
  *
  */
-jQuery.Callbacks = function( options ) {
+jQuery.Callbacks = function( options ) {//回调对象 : 对函数的统一管理
 
 	// Convert options from String-formatted to Object-formatted if needed
 	// (we check in cache first)
@@ -3046,7 +3046,7 @@ jQuery.extend({
 	Deferred: function( func ) {
 		var tuples = [
 				// action, add listener, listener list, final state
-				[ "resolve", "done", jQuery.Callbacks("once memory"), "resolved" ],
+				[ "resolve", "done", jQuery.Callbacks("once memory"), "resolved" ],//once代表只执行一次，memory代表在fire调用之后的add添加的方法也会执行（默认不会执行）。之所有这样写，是因为成功和失败只需要触发一次，而进行中，可以一直触发。
 				[ "reject", "fail", jQuery.Callbacks("once memory"), "rejected" ],
 				[ "notify", "progress", jQuery.Callbacks("memory") ]
 			],
@@ -3093,15 +3093,15 @@ jQuery.extend({
 		promise.pipe = promise.then;
 
 		// Add list-specific methods
-		jQuery.each( tuples, function( i, tuple ) {
-			var list = tuple[ 2 ],
-				stateString = tuple[ 3 ];
+		jQuery.each( tuples, function( i, tuple ) {//对数组进行遍历,tuple就是数组中的每一项（也是一个数组）
+			var list = tuple[ 2 ],//jQuery.Callbacks()，返回一个回调对象
+				stateString = tuple[ 3 ];//"resolved"，"rejected"，undefined
 
 			// promise[ done | fail | progress ] = list.add
-			promise[ tuple[1] ] = list.add;
+			promise[ tuple[1] ] = list.add;//回调对象的add方法。
 
 			// Handle state
-			if ( stateString ) {
+			if ( stateString ) {//tuples数组的前两项进入if语句
 				list.add(function() {
 					// state = [ resolved | rejected ]
 					state = stateString;
@@ -3115,7 +3115,7 @@ jQuery.extend({
 				deferred[ tuple[0] + "With" ]( this === deferred ? promise : this, arguments );
 				return this;
 			};
-			deferred[ tuple[0] + "With" ] = list.fireWith;
+			deferred[ tuple[0] + "With" ] = list.fireWith; //回调对象的fireWith方法，其实就是fire方法，因为fire方法就是调用fireWith进行操作的
 		});
 
 		// Make the deferred a promise
