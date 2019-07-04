@@ -432,11 +432,11 @@ cb.done(function(){
 ```
 * 第二套是：代表未完成，失败，触发
 ```python
-$.Callbacks()  <-> $.Deferred()，cb.fire()  <-> cb.reject();，cb.add <-> cb.fail。
+ $.Deferred()，cb.fire()  <-> cb.reject();，cb.add <-> cb.fail。
 ```
 * 第三套是：进行时，触发
 ```python
-$.Callbacks()  <-> $.Deferred()，cb.fire()  <-> cb.notify();，cb.add <-> cb.progress。
+  $.Deferred()，cb.fire()  <-> cb.notify();，cb.add <-> cb.progress。
 ```
 ### Deferred在Ajax中的应用举例
 ```python
@@ -452,8 +452,17 @@ $.ajax({
 //使用延迟对象来操作Ajax时,done代表成功，fail代表失败
 $.ajax('xxx.php').done(function(){}).fail(function(){});
 ```
-## support : 功能检测
-
+## support : 功能检测  存放了浏览器对各个具有兼容性功能的兼容性，主要在jQuery内部处理
+* checkOn：动态创建的radio和checkbox的默认值是否为"on"，在老版本的webkit下默认值是""。
+        例子：3checkOn.html
+* optSelected：动态创建的下拉框中的第一个option是否默认被选中。
+        例子：4optSelected.html
+* noCloneChecked：检测克隆radio和checkbox元素时，是否克隆被选中。
+* optDisabled：下拉框被禁用之后，子项是否被禁用的判断。
+* radioValue：先设置input的value值再去设置type为radio，input能否获取该value值。
+* focusinBubbles：是否支持onfocusin事件。（onfocus是不能冒泡的而onfocusin可以冒泡，只有IE支持）（也能同时判断onfocusout事件）
+* boxSizing：是否支持动态设置怪异模式box-sizing:border-box;
+* pixelPosition：检测样式中的定位百分百通过getComputedStyle获取的值是否是像素值，只有safari不是
 ## data() : 数据缓存
 
 ## queue() : 队列方法 : 执行顺序的管理 

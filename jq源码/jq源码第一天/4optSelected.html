@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>兼容</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        window.l = (function () {
+            var el = document.createElement("div"),
+                index = 0;
+            el.style.cssText = "padding:10px;position:fixed;top:0;right:0;width:10%;border:1px solid #f00;";
+            return function (message) {
+                message = message.toString();
+                if (message) {
+                    var span = document.createElement("span");
+                    span.innerHTML = (++index) + "信息:<br>" + message + "<br>";
+                    el.appendChild(span);
+                };
+                //IE低版本直接通过createElement创建的元素有parentNode;
+                if (!el.parentNode || (el.parentNode.toString() === "[object]")) {
+                    document.body.appendChild(el);
+                };
+                return l;
+            };
+        })();
+    </script>
+
+    <script type="text/javascript">
+        select = document.createElement("select");
+        var opt;
+        //创建optino元素的方法1：
+        //opt = document.createElement("option");
+        //opt.setAttribute("value","value");
+        //opt.setAttribute("name","name");
+        //(opt.textContent  = "text")|| (opt.innerText = "text");
+
+        //创建optino元素的方法2：
+        //这样也可以;
+        //opt = document.createElement("option");
+        //opt.value = "value";
+        //opt.text = "text";
+        //这样也行;
+
+        //创建optino元素的方法3：
+        opt = new Option("text", "value");
+
+        select.appendChild(opt);
+        document.getElementsByTagName("body")[0].appendChild(select);
+        l(opt.selected);
+    </script>
+</body>
+
+</html>

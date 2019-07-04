@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>focus(in|out) not implemented</title>
+    <script type="text/javascript">
+        //<![CDATA[
+
+        document.addEventListener('focusin', function (e) {
+            if (e.target.tagName == 'INPUT') e.target.style.backgroundColor = 'green'
+        }, 0)
+        document.addEventListener('focusout', function (e) {
+            if (e.target.tagName == 'INPUT') e.target.style.backgroundColor = 'white'
+        }, 0)
+
+        //]]>
+    </script>
+</head>
+
+<body>
+    <div><input type="text" style="background:red" /></div>
+    <div>Please click on input above to change element color.</div>
+    <div><a
+            href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#event-type-focusIn">http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#event-type-focusIn</a>
+    </div>
+    <div style="color:red">Firefox: not implemented yet!</div>
+    <div style="color:green">IE 9: focused in - green</div>
+    <div style="color:green">Opera 11.5: focused in - green</div>
+    <div style="color:green">Chrome 14: focused in - green</div>
+    <div style="color:green">Safari 5.1: focused in - green</div>
+    <div>Konqueror 4.7: only DOMFocus</div>
+</body>
+
+</html>

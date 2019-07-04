@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>兼容</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        window.l = (function () {
+            var el = document.createElement("div"),
+                index = 0;
+            el.style.cssText = "padding:10px;position:fixed;top:0;right:0;width:10%;border:1px solid #f00;";
+            return function (message) {
+                message = message.toString();
+                if (message) {
+                    var span = document.createElement("span");
+                    span.innerHTML = (++index) + "信息:<br>" + message + "<br>";
+                    el.appendChild(span);
+                };
+                //IE低版本直接通过createElement创建的元素有parentNode;
+                if (!el.parentNode || (el.parentNode.toString() === "[object]")) {
+                    document.body.appendChild(el);
+                };
+                return l;
+            };
+        })();
+    </script>
+    <input id="ck" type='checkbox' />
+    <script type="text/javascript">
+        var el = document.getElementById("ck");
+        //标准浏览器有change事件;
+        el.onchange = function () {
+            l(el.value);
+            l(ck.checked)
+        }
+        //IE中的万能事件propertychange;
+        el.onpropertychange = function () {
+            l(el.value);
+            l(ck.checked)
+        }
+        l(el.value);
+    </script>
+</body>
+
+</html>
