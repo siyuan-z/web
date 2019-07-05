@@ -9,7 +9,7 @@
 * git log 历史记录
 * git diff 差距对比(工作区与缓存区的对比)
 * git reset HEAD 文件名/git checkout -- 文件名  撤销
-* git rm 文件名  删除缓存区(工作区不在)
+* git rm 文件名  删除缓存区(工作区不在) 
 * git rm -f 文件名  删除(缓存区和工作区)
 * git rm --cached 文件名  删除缓存区(工作区还在)
 * git checkout commit_id 文件名  恢复某个文件

@@ -7,7 +7,7 @@
 * E[attr*="value"]指定了属性名，并且有属性值，而且属值中包含了value
 * E[attr|="value"]指定了属性名，并且属性值是value或者以“value-”开头     的值（比如说zh-cn）
 
-
+ 
 ## 结构性伪类
 * E:nth-child(n)  表示E父元素中的第n个字节点
     p:nth-child(odd){background:red} 匹配奇数行
