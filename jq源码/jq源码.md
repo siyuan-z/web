@@ -452,21 +452,237 @@ $.ajax({
 //使用延迟对象来操作Ajax时,done代表成功，fail代表失败
 $.ajax('xxx.php').done(function(){}).fail(function(){});
 ```
-## support : 功能检测  存放了浏览器对各个具有兼容性功能的兼容性，主要在jQuery内部处理
+## support : 功能检测  用于检查浏览器对各项特性的支持
 * checkOn：动态创建的radio和checkbox的默认值是否为"on"，在老版本的webkit下默认值是""。
         例子：3checkOn.html
 * optSelected：动态创建的下拉框中的第一个option是否默认被选中。
         例子：4optSelected.html
-* noCloneChecked：检测克隆radio和checkbox元素时，是否克隆被选中。
-* optDisabled：下拉框被禁用之后，子项是否被禁用的判断。
-* radioValue：先设置input的value值再去设置type为radio，input能否获取该value值。
-* focusinBubbles：是否支持onfocusin事件。（onfocus是不能冒泡的而onfocusin可以冒泡，只有IE支持）（也能同时判断onfocusout事件）
-* boxSizing：是否支持动态设置怪异模式box-sizing:border-box;
-* pixelPosition：检测样式中的定位百分百通过getComputedStyle获取的值是否是像素值，只有safari不是
-## data() : 数据缓存
+* $.support.submitBubbles, $.support.changeBubbles, $.support.focusinBubbles 冒泡 这三个检测要等DOM加载完才会进行判断，这里只是先定义一下。
+        例子：5DOM加载完执行.html 
+* $.support.noCloneEvent 是检测IE是否会复制元素的事件的属性
+```python
+if ( !div.addEventListener && div.attachEvent && div.fireEvent ) {
+    div.attachEvent( "onclick", clickFn = function() {
+        // Cloning a node shouldn't copy over any
+        // bound event handlers (IE does this)
+        support.noCloneEvent = false;
+    });
+    div.cloneNode( true ).fireEvent("onclick");
+    div.detachEvent( "onclick", clickFn );
+}
+```
 
-## queue() : 队列方法 : 执行顺序的管理 
+## data() : 数据缓存 就是让一个对象和一组数据一对一的关联
+* Data.prototype.key() - 钥匙
+```python
+Data.prototype = {
+        //获取缓存的钥匙
+        key: function (owner) {
+            //检测是否可以存放钥匙
+            if (!Data.accepts(owner)) {
+                return 0; //return false
+            }
+ 
+            var descriptor = {},
+                //获取钥匙，还是在Element上挂载jQuery属性
+             unlock = owner[this.expando];
+            //如果钥匙没有则创建
+            if (!unlock) {
+                unlock = Data.uid++;
+                try {
+                    //把expando转移到Data中，没一个Data实例都有不同的expando
+                    descriptor[this.expando] = { value: unlock };
+                    //参考：http://msdn.microsoft.com/zh-cn/library/ie/ff800817%28v=vs.94%29.aspx
+                    //这个属性不会被枚举
+                    Object.defineProperties(owner, descriptor);
+                } catch (e) {
+                    //如果没有Object.defineProperties，则采用jQuery.extend
+                    descriptor[this.expando] = unlock;
+                    jQuery.extend(owner, descriptor);
+                }
+            }
+            if (!this.cache[unlock]) {
+                this.cache[unlock] = {};
+            }
+            //返回这个钥匙
+            return unlock;
+        }
+    };
+```
+* access() - 通用接口
+```python
+var access = jQuery.access = function (elems, fn, key, value, chainable, emptyGet, raw) {
+        //元素，委托的方法，属性名，属性值，是否链式，当返回空数据的时候采用的默认值,fn参数是否是Function
+        //一组通用（内部）方法，既然设置也能获取Data
+        var i = 0,
+        len = elems.length,
+        bulk = key == null;
+        //Object
+        if (jQuery.type(key) === "object") {
+            //如果是放数据，Object类型，则循环执行fn
+            chainable = true;//这里修正了是否链式....
+            for (i in key) {
+                jQuery.access(elems, fn, i, key[i], true, emptyGet, raw);
+            }
+ 
+            // Sets one value
+        } else if (value !== undefined) {
+            chainable = true;
+            //如果设置的value是Function
+            if (!jQuery.isFunction(value)) {
+                raw = true;
+            }
+            //当参数是这样的：access(elems,fn,null)
+            if (bulk) {
+                if (raw) {
+                    //参数是这样的：access(elems,fn,null,function)
+                    fn.call(elems, value);
+                    fn = null;
+                } else {
+                    //参数是这样的：access(elems,fn,null,String/Object)
+                    bulk = fn;//这里把fn给调换了
+                    fn = function (elem, key, value) {
+                        //这个jQuery()封装的真是....
+                        return bulk.call(jQuery(elem), value);
+                    };
+                }
+            }
+            //到了这里如果还可以执行的话那么参数是：access(elems,fn,key,Function||Object/String)
+            if (fn) {
+                for (; i < len; i++) {
+                    //循环每一项执行
+                    fn(elems[i], key, raw ? value : value.call(elems[i], i, fn(elems[i], key)));
+                }
+            }
+        }
+ 
+        return chainable ?
+            //如果是设置数据，这个elems最终被返回，而在jQuery.fn.data中这个elems是this——也就是jQuery对象，保证了链式
+            elems :
+ 
+        // Gets
+            //如果上面的设置方法都没有走，那么就是获取
+        bulk ?//bulk是不同的工作模式，参阅jQuery.css，jQuery.attr
+            fn.call(elems) :
+            len ? fn(elems[0], key) : emptyGet;
+    };
+```
+* jQuery.fn.data() - 曝露API
+```python
+jQuery.fn.extend({
+        data: function (key, value) {
+            var i, name, data,
+            elem = this[0],
+            attrs = elem && elem.attributes;
+ 
+            // 获取全部的数据，和1.x思路一致
+            if (key === undefined) {
+                if (this.length) {
+                    data = data_user.get(elem);
+ 
+                    if (elem.nodeType === 1 && !data_priv.get(elem, "hasDataAttrs")) {
+                        i = attrs.length;
+                        while (i--) {
+ 
+                            // Support: IE11+
+                            // The attrs elements can be null (#14894)
+                            if (attrs[i]) {
+                                name = attrs[i].name;
+                                if (name.indexOf("data-") === 0) {
+                                    name = jQuery.camelCase(name.slice(5));
+                                    dataAttr(elem, name, data[name]);
+                                }
+                            }
+                        }
+                        data_priv.set(elem, "hasDataAttrs", true);
+                    }
+                }
+ 
+                return data;
+            }
+ 
+            // 设置Object类型的的数据
+            if (typeof key === "object") {
+                return this.each(function () {
+                    data_user.set(this, key);
+                });
+            }
+            //调用jQuery.access
+            return access(this, function (value) {
+                //value则是挂载的数据名（即使外面挂载的Object也会被拆开到这里一个个循环执行）
+                var data,
+             camelKey = jQuery.camelCase(key);//转换驼峰
+                if (elem && value === undefined) {
+                    //拿数据
+                    data = data_user.get(elem, key);
+                    if (data !== undefined) {
+                        return data;
+                    }
+                    //用驼峰拿
+                    data = data_user.get(elem, camelKey);
+                    if (data !== undefined) {
+                        return data;
+                    }
+                    //用HTML5拿
+                    data = dataAttr(elem, camelKey, undefined);
+                    if (data !== undefined) {
+                        return data;
+                    }
+                    return;
+                }
+                //循环每一项设置
+                this.each(function () {
+                    //提前设置驼峰的...
+                    data_user.set(this, camelKey, value);
+                    if (key.indexOf("-") !== -1 && data !== undefined) {
+                    //如果有name-name命名再设一边
+                        data_user.set(this, key, value);
+                    }
+                });
+            }, null, value, arguments.length > 1, null, true);
+        },
+ 
+        removeData: function (key) {
+            return this.each(function () {
+                //调用相应Data实例方法移除即可
+                data_user.remove(this, key);
+            });
+        }
+    });
+```
+## queue() : 队列方法 : 队列是一种特殊的线性表，是属于先进先出，而且只允许在表的前端进行删除操作（出队），在表的后端（队尾）进行插入操作（入队） 
+* 基本使用 
+```python
+$('div').queue('q',[function(next){alert('队列函数1')},function(next){alert('队列函数2')},function(next){alert('队列函数3')}])
 
+var queue = $('div').queue(); // 获取第一个div元素的队列"q"
+var queue1 = $("#n1").queue("q");
+var queue2 = $("#n2").queue("q");
+var queue3 = $("#n3").queue("q");
+document.writeln( queue === queue1 ); // true
+document.writeln( queue === queue2 ); // false
+document.writeln( queue === queue3 ); // false
+
+document.writeln( queue.length ); // 3
+$('div').dequeue('q');
+
+```
+```python
+$(document.body).click(function () {
+  $("div").show("slow");
+  $("div").animate({left:'+=200'},2000);
+  $("div").queue(function () {
+    $(this).addClass("newcolor");
+    $(this).dequeue();
+  });
+  $("div").animate({left:'-=200'},500);
+  $("div").queue(function () {
+    $(this).removeClass("newcolor");
+    $(this).dequeue();
+  });
+  $("div").slideUp();
+});
+```
 ## attr() prop() val() addClass()等 : 对元素属性的操作
 
 ## on() trigger() : 事件操作的相关方法

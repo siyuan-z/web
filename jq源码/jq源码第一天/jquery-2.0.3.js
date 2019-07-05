@@ -3190,68 +3190,68 @@ jQuery.support = (function( support ) {
 		opt = select.appendChild( document.createElement("option") );
 
 	// Finish early in limited environments
-	if ( !input.type ) {
+	if ( !input.type ) {//如果创建的input元素没有type类型，就直接返回。现在的浏览器都支持type类型，所以不会进入if语句
 		return support;
 	}
 
-	input.type = "checkbox";
+	input.type = "checkbox";//改变这个input的type类型
 
 	// Support: Safari 5.1, iOS 5.1, Android 4.x, Android 2.3
 	// Check the default checkbox/radio value ("" on old WebKit; "on" elsewhere)
-	support.checkOn = input.value !== "";
+	support.checkOn = input.value !== "";//复选框的value值默认是什么，老版本的webkit下，默认值是""，所以它的support.checkOn = false。其他浏览器默认值是on，所以support.checkOn = true。针对这种差异化，jQuery通过hooks来解决，使所有的浏览器返回的值是一样的，解决兼容性问题。
 
 	// Must access the parent to make an option select properly
 	// Support: IE9, IE10
-	support.optSelected = opt.selected;
+	support.optSelected = opt.selected;//创建了一个下拉菜单select，并且在select下创建了一个子项option。在火狐和谷歌浏览器，safari下，第一个子项会被默认选上。但是在所有IE下，不会被默认选中。
 
 	// Will be defined later
-	support.reliableMarginRight = true;
+	support.reliableMarginRight = true;//这三个检测要等DOM加载完才会进行判断，这里只是先定义一下。
 	support.boxSizingReliable = true;
 	support.pixelPosition = false;
 
 	// Make sure checked status is properly cloned
 	// Support: IE9, IE10
-	input.checked = true;
-	support.noCloneChecked = input.cloneNode( true ).checked;
+	input.checked = true; //让复选框选中
+	support.noCloneChecked = input.cloneNode( true ).checked;//克隆出来的新的复选框是否也被选中。火狐下，safari下，chrome下，克隆出来的都是选中的，IE9-10下，克隆出来的并没有被选中。jQuery会用hooks解决这个兼容性问题，让IE9-10下，克隆出来的复选框选中
 
 	// Make sure that the options inside disabled selects aren't marked as disabled
 	// (WebKit marks them as disabled)
-	select.disabled = true;
-	support.optDisabled = !opt.disabled;
+	select.disabled = true;//禁止下拉菜单
+	support.optDisabled = !opt.disabled;//select下的option应该不受影响，老版本webkit的opt.disabled也会变成true，就是受select影响
 
 	// Check if an input maintains its value after becoming a radio
 	// Support: IE9, IE10
-	input = document.createElement("input");
-	input.value = "t";
-	input.type = "radio";
-	support.radioValue = input.value === "t";
+	input = document.createElement("input");//创建一个新的input
+	input.value = "t";//设置input的value值为"t"
+	input.type = "radio";//再设置input的type类型
+	support.radioValue = input.value === "t";//判断input的value值是否等于"t"，IE下会等于on,因此IE下返回false
 
 	// #11217 - WebKit loses check when the name is after the checked attribute
-	input.setAttribute( "checked", "t" );
-	input.setAttribute( "name", "t" );
+	input.setAttribute( "checked", "t" );//设置input的checked属性值为"t"
+	input.setAttribute( "name", "t" );//设置input的name属性值为"t"
 
-	fragment.appendChild( input );
+	fragment.appendChild( input ); //把这个input添加到文档碎片对象中
 
 	// Support: Safari 5.1, Android 4.x, Android 2.3
 	// old WebKit doesn't clone checked state correctly in fragments
-	support.checkClone = fragment.cloneNode( true ).cloneNode( true ).lastChild.checked;
+	support.checkClone = fragment.cloneNode( true ).cloneNode( true ).lastChild.checked;//在老版本的webkit下，克隆文档碎片，不能返回checked的值，因此等于false
 
 	// Support: Firefox, Chrome, Safari
 	// Beware of CSP restrictions (https://developer.mozilla.org/en/Security/CSP)
-	support.focusinBubbles = "onfocusin" in window;
+	support.focusinBubbles = "onfocusin" in window; //只有IE下支持这个事件。focus事件不会冒泡，而focusin支持
 
-	div.style.backgroundClip = "content-box";
-	div.cloneNode( true ).style.backgroundClip = "";
-	support.clearCloneStyle = div.style.backgroundClip === "content-box";
+	div.style.backgroundClip = "content-box";//背景剪切
+	div.cloneNode( true ).style.backgroundClip = "";//克隆出来的div应该不影响原div
+	support.clearCloneStyle = div.style.backgroundClip === "content-box";//IE下会被影响，变成""，等于false
 
 	// Run tests that need a body at doc ready
-	jQuery(function() {
+	jQuery(function() { //有些方法需要等到DOM加载完才能通过功能检测判断，意思就是等这些新创建的元素真正的添加到页面中才能进行检测
 		var container, marginDiv,
 			// Support: Firefox, Android 2.3 (Prefixed box-sizing versions).
-			divReset = "padding:0;margin:0;border:0;display:block;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box",
+			divReset = "padding:0;margin:0;border:0;display:block;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box",//content-box是标准模式，border-box是怪异模式。
 			body = document.getElementsByTagName("body")[ 0 ];
 
-		if ( !body ) {
+		if ( !body ) { //如果body不存在，直接return。
 			// Return for frameset docs that don't have a body
 			return;
 		}
@@ -3267,14 +3267,14 @@ jQuery.support = (function( support ) {
 
 		// Workaround failing boxSizing test due to offsetWidth returning wrong value
 		// with some non-1 values of body zoom, ticket #13543
-		jQuery.swap( body, body.style.zoom != null ? { zoom: 1 } : {}, function() {
-			support.boxSizing = div.offsetWidth === 4;
+		jQuery.swap( body, body.style.zoom != null ? { zoom: 1 } : {}, function() {//zoom是放大页面的属性，等于1的时候，不放大也不缩小
+			support.boxSizing = div.offsetWidth === 4;//怪异模式下，等于4，支持boxSizing，所有浏览器都支持
 		});
 
 		// Use window.getComputedStyle because jsdom on node.js will break without it.
 		if ( window.getComputedStyle ) {
-			support.pixelPosition = ( window.getComputedStyle( div, null ) || {} ).top !== "1%";
-			support.boxSizingReliable = ( window.getComputedStyle( div, null ) || { width: "4px" } ).width === "4px";
+			support.pixelPosition = ( window.getComputedStyle( div, null ) || {} ).top !== "1%";//safari下返回1%，因此等于false。而其他浏览器会转换成像素值。
+			support.boxSizingReliable = ( window.getComputedStyle( div, null ) || { width: "4px" } ).width === "4px";//IE下，如果是怪异模式，width不等于4px，需要减去padding，border
 
 			// Support: Android 2.3
 			// Check if div with explicit width and no margin-right incorrectly
@@ -3283,10 +3283,10 @@ jQuery.support = (function( support ) {
 			marginDiv = div.appendChild( document.createElement("div") );
 			marginDiv.style.cssText = div.style.cssText = divReset;
 			marginDiv.style.marginRight = marginDiv.style.width = "0";
-			div.style.width = "1px";
+			div.style.width = "1px";//老版本的webkit下，会让marginDiv的width变成1
 
 			support.reliableMarginRight =
-				!parseFloat( ( window.getComputedStyle( marginDiv, null ) || {} ).marginRight );
+				!parseFloat( ( window.getComputedStyle( marginDiv, null ) || {} ).marginRight );//应该等于0，reliableMarginRight等于true。
 		}
 
 		body.removeChild( container );
@@ -3314,7 +3314,7 @@ function Data() {
 	// Support: Android < 4,
 	// Old WebKit does not have Object.preventExtensions/freeze method,
 	// return new empty object instead with no [[set]] accessor
-	Object.defineProperty( this.cache = {}, 0, {
+	Object.defineProperty( this.cache = {}, 0, {//防止被修改
 		get: function() {
 			return {};
 		}
@@ -3325,7 +3325,7 @@ function Data() {
 
 Data.uid = 1;
 
-Data.accepts = function( owner ) {
+Data.accepts = function( owner ) {//目标过滤
 	// Accepts only:
 	//  - Node
 	//    - Node.ELEMENT_NODE
@@ -3337,7 +3337,7 @@ Data.accepts = function( owner ) {
 };
 
 Data.prototype = {
-	key: function( owner ) {
+	key: function( owner ) {//专门用来获取和放置Element的钥匙。
 		// We can accept data for non-element nodes in modern browsers,
 		// but we should not, see #8335.
 		// Always return the key for a frozen object.
@@ -3373,7 +3373,7 @@ Data.prototype = {
 
 		return unlock;
 	},
-	set: function( owner, data, value ) {
+	set: function( owner, data, value ) {//放置数据
 		var prop,
 			// There may be an unlock assigned to this node,
 			// if there is no entry for this "owner", create one inline
@@ -3399,7 +3399,7 @@ Data.prototype = {
 		}
 		return cache;
 	},
-	get: function( owner, key ) {
+	get: function( owner, key ) {//获取数据
 		// Either a valid cache is found, or will be created.
 		// New caches will be created and the unlock returned,
 		// allowing direct access to the newly created
@@ -3409,7 +3409,7 @@ Data.prototype = {
 		return key === undefined ?
 			cache : cache[ key ];
 	},
-	access: function( owner, key, value ) {
+	access: function( owner, key, value ) {//通用API，根据参数既然可以放置也可以获取数据
 		var stored;
 		// In cases where either:
 		//
@@ -3443,7 +3443,7 @@ Data.prototype = {
 		// return the expected data based on which path was taken[*]
 		return value !== undefined ? value : key;
 	},
-	remove: function( owner, key ) {
+	remove: function( owner, key ) {//移除数据
 		var i, name, camel,
 			unlock = this.key( owner ),
 			cache = this.cache[ unlock ];
@@ -3481,12 +3481,12 @@ Data.prototype = {
 			}
 		}
 	},
-	hasData: function( owner ) {
+	hasData: function( owner ) {//检测是否有数据
 		return !jQuery.isEmptyObject(
 			this.cache[ owner[ this.expando ] ] || {}
 		);
 	},
-	discard: function( owner ) {
+	discard: function( owner ) {//丢弃掉这个Element的存储空间
 		if ( owner[ this.expando ] ) {
 			delete this.cache[ owner[ this.expando ] ];
 		}
@@ -3657,13 +3657,13 @@ jQuery.extend({
 
 		if ( elem ) {
 			type = ( type || "fx" ) + "queue";
-			queue = data_priv.get( elem, type );
+			queue = data_priv.get( elem, type );//返回元素中通过data存放的队列
 
 			// Speed up dequeue by getting out quickly if this is just a lookup
-			if ( data ) {
-				if ( !queue || jQuery.isArray( data ) ) {
+			if ( data ) {// 如果data存在 执行setting操作
+				if ( !queue || jQuery.isArray( data ) ) {//如果队列不存在 或data是数组 重新设置队列
 					queue = data_priv.access( elem, type, jQuery.makeArray(data) );
-				} else {
+				} else {//如果队列存在 且data为单个回调函数 则将data存入queue中
 					queue.push( data );
 				}
 			}
@@ -3671,19 +3671,19 @@ jQuery.extend({
 		}
 	},
 
-	dequeue: function( elem, type ) {
+	dequeue: function( elem, type ) { //出站操作
 		type = type || "fx";
 
-		var queue = jQuery.queue( elem, type ),
+		var queue = jQuery.queue( elem, type ),//先获取队列
 			startLength = queue.length,
-			fn = queue.shift(),
-			hooks = jQuery._queueHooks( elem, type ),
+			fn = queue.shift(),//取出队列中的第一项
+			hooks = jQuery._queueHooks( elem, type ),//当data中的startLength为0时 将data删除
 			next = function() {
 				jQuery.dequeue( elem, type );
 			};
 
 		// If the fx queue is dequeued, always remove the progress sentinel
-		if ( fn === "inprogress" ) {
+		if ( fn === "inprogress" ) {// inprogreess作用是自动执行队列中的第一个函数
 			fn = queue.shift();
 			startLength--;
 		}
@@ -3692,8 +3692,8 @@ jQuery.extend({
 
 			// Add a progress sentinel to prevent the fx queue from being
 			// automatically dequeued
-			if ( type === "fx" ) {
-				queue.unshift( "inprogress" );
+			if ( type === "fx" ) {//对于不是第一个添加 inprogress 执行fx
+				queue.unshift( "inprogress" ); //添加inprogress
 			}
 
 			// clear up the last queue stop function
@@ -3701,13 +3701,13 @@ jQuery.extend({
 			fn.call( elem, next, hooks );
 		}
 
-		if ( !startLength && hooks ) {
+		if ( !startLength && hooks ) {//执行删除缓存操作
 			hooks.empty.fire();
 		}
 	},
 
 	// not intended for public consumption - generates a queueHooks object, or returns the current one
-	_queueHooks: function( elem, type ) {
+	_queueHooks: function( elem, type ) {//删除data的callbacks
 		var key = type + "queueHooks";
 		return data_priv.get( elem, key ) || data_priv.access( elem, key, {
 			empty: jQuery.Callbacks("once memory").add(function() {
@@ -3721,13 +3721,13 @@ jQuery.fn.extend({
 	queue: function( type, data ) {
 		var setter = 2;
 
-		if ( typeof type !== "string" ) {
+		if ( typeof type !== "string" ) { //type省略的情况 第一个参数为function类型 参数长度为1
 			data = type;
 			type = "fx";
 			setter--;
 		}
 
-		if ( arguments.length < setter ) {
+		if ( arguments.length < setter ) {//如果参数总数小于setting 返回第一个元素的queue
 			return jQuery.queue( this[0], type );
 		}
 
@@ -3739,7 +3739,7 @@ jQuery.fn.extend({
 				// ensure a hooks for this queue
 				jQuery._queueHooks( this, type );
 
-				if ( type === "fx" && queue[0] !== "inprogress" ) {
+				if ( type === "fx" && queue[0] !== "inprogress" ) {// 如果type为fx并且队列中的第一个值不为inprogress 就自动执行第一个函数
 					jQuery.dequeue( this, type );
 				}
 			});
@@ -3767,14 +3767,14 @@ jQuery.fn.extend({
 	},
 	// Get a promise resolved when queues of a certain type
 	// are emptied (fx is the type by default)
-	promise: function( type, obj ) {
+	promise: function( type, obj ) {// 全部队列执行完后可以执行promise
 		var tmp,
-			count = 1,
+			count = 1,//记录有多少个执行的队列
 			defer = jQuery.Deferred(),
 			elements = this,
 			i = this.length,
 			resolve = function() {
-				if ( !( --count ) ) {
+				if ( !( --count ) ) { // 累减为0 执行if
 					defer.resolveWith( elements, [ elements ] );
 				}
 			};
@@ -3787,7 +3787,7 @@ jQuery.fn.extend({
 
 		while( i-- ) {
 			tmp = data_priv.get( elements[ i ], type + "queueHooks" );
-			if ( tmp && tmp.empty ) {
+			if ( tmp && tmp.empty ) {// 如果tmp不为空 队列值加1
 				count++;
 				tmp.empty.add( resolve );
 			}
