@@ -5,6 +5,7 @@
 * git config --global alias.别名 想改的命令名  改命令名
 * git clone url  克隆
 * git commit -a -m "注释"  提交（省了add这步操作）
+* git rebase -i HEAD~4  对 4 次(多个) commit 进行合并处理
 * git commit -m "注释“ --amend 撤销上一次提交 连这次添加的一次性提交
 * git log 历史记录
 * git diff 差距对比(工作区与缓存区的对比)
@@ -32,6 +33,7 @@
 * git checkout 名字  切换到分支
 * git checkout -b 名字  快速切换分支
 * git merge 分支名 合并分支
+* git rebase master 合并分支(与上面的区别在于不会产生历史记录)
 * git branch --merge 名字  查看合并分支
 * git branch --no-merge 名字  查看未合并分支
 * git branch -d 分支名  删除分支（合并的分支）

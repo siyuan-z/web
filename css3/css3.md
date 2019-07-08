@@ -9,7 +9,7 @@
 
  
 ## 结构性伪类
-* E:nth-child(n)  表示E父元素中的第n个字节点
+* E:nth-child(n)  表示E父元素中的第n个字节点 
     p:nth-child(odd){background:red} 匹配奇数行
     p:nth-child(even){background:red} 匹配偶数行
     p:nth-child(2n){background:red}
