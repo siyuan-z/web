@@ -15,7 +15,7 @@ console.log(bf);*/
 
 //new Buffer(array);
 /*
-var bf = new Buffer([1,2,3]);
+var bf = new Buffer([1,2,3]); 
 console.log(bf);
 bf[10] = 10;
 console.log(bf);*/

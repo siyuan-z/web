@@ -5,6 +5,11 @@
     注意：在node中也没有什么window
     例子：ECMAScript/1.js
 ## process  他是一个全局对象(默认情况下，输入流是关闭的，要监听处理输入流数据，首先要开启输入流)
+* exit 当 Node.js 进程因以下原因之一即将退出时，则会触发 'exit' 事件：
+    显式调用 process.exit() 方法；
+    Node.js 事件循环不再需要执行任何其他工作
+* process.stdin 可读流
+*  process.stdout 可写流
 例子：process/1.js
 
 ## nodule 模板(一个文件就是一个模块,每个模块都有自己的作用域)注意：我们使用var来申明的一个变量，他并不是全局的，而是属于当前模块下
@@ -17,7 +22,7 @@
 模块加载机制：
    路径
        绝对路径
-     相对路径
+       相对路径
 
 require('b:/录制视频/NodeJS/课件/module/2.js');
 require('2.js');    //加载node中的核心模块，或者是node_modules
@@ -42,3 +47,74 @@ require('./3');
     例子：module/6.js
 
 ## Buffer 用于操作二进制数据流
+* new Buffer(size) 新的所需长度Buffer
+```python
+const buf = new Buffer(10);
+console.log(buf);
+// Prints: <Buffer 00 00 00 00 00 00 00 00 00 00>
+```
+* new Buffer(buffer) 将传递的buffer数据复制到新Buffer实例上
+```python
+const buf1 = new Buffer('buffer');
+const buf2 = new Buffer(buf1);
+
+buf1[0] = 0x61;
+
+console.log(buf1.toString());
+// Prints: auffer
+console.log(buf2.toString());
+// Prints: buffer
+```
+* new Buffer（string [，encoding]）(string 要编码的字符串 encoding 的编码string。默认值： 'utf8' )  创建一个新的Buffer包含string。该encoding参数标识了字符编码string。
+```python
+const buf1 = new Buffer('this is a tést');
+const buf2 = new Buffer('7468697320697320612074c3a97374', 'hex');
+console.log(buf1.toString());
+// Prints: this is a tést
+console.log(buf2.toString());
+// Prints: this is a tést
+console.log(buf1.toString('ascii'));
+// Prints: this is a tC)st
+```
+* buf.write（string [，offset [，length]] [，encoding]）写入string到buf在offset根据所述字符编码 encoding。的length参数是要写入的字节的数目。如果buf没有足够的空间来容纳整个字符串，则只会string写入部分字符串。但是，不会写入部分编码的字符。
+```python
+    string 要写入的字符串buf。
+    offset 开始写入之前要跳过的字节数string。 默认值： 0。
+    length 要写入的字节数。默认值： buf.length - offset。
+    encoding 的字符编码string。默认值： 'utf8'
+
+var str = 'miaov';
+console.log( new Buffer(str) );
+var bf = new Buffer(5);
+bf.write( str );
+console.log(bf);
+bf.write(str, 1);
+bf.write(str, 1, 3);
+console.log(bf);
+```
+* buf.toString（[encoding [，start [，end]]]）buf根据指定的字符编码解码为字符串 encoding。start并且end可以传递以仅解码的子集buf。
+
+```python
+encoding 要使用的字符编码。默认值： 'utf8'。
+start 开始解码的字节偏移量。默认值： 0。
+end 停止解码的字节偏移量（不包括在内）。 默认值： buf.length
+
+var bf = new Buffer('miaov');
+console.log( bf.toString() );
+console.log( bf.toString('utf-8', 1, 3) );
+```
+* buf.toJSON（）返回的JSON表示形式buf
+```python
+var bf = new Buffer('miaov');
+console.log( bf.toJSON() );
+```
+* Buffer.byteLength（string [，encoding]）返回字符串的实际字节长度
+```python
+string 计算长度的值。
+encoding  If string是一个字符串，这是它的编码。 默认值： 'utf8'
+
+
+var str1 = 'miaov';
+console.log(str1.length);
+console.log(Buffer.byteLength(str1));
+```
