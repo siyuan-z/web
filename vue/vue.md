@@ -196,7 +196,7 @@ routes: [{
 	to:  	要进入的目标 路由对象    到哪里去
 	from: 	正要离开导航的路由对象  从哪里来
 	next: 	用来决定跳转或取消导航
-
+  
 ```python
 router.beforeEach((to, from, next) => {
   console.log("beforeEach")
