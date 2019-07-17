@@ -6,7 +6,7 @@ module.exports = {
         index2: './src/index2'
     },
     output: {
-        publicPath: '../build/', //服务器根路径
+        publicPath: ' ', //服务器根路径
         path: './build', //编译到当前目录
         filename: '[name].js' //编译后的文件名字
     },
